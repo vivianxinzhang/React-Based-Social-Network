@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Form, Input, Button } from 'antd';
 // import { Link } from 'react-router-dom';
-// import { API_ROOT} from "../constants";
+import { API_ROOT } from "../constants";
 // import axios from 'axios';
 
 class LoginForm extends Component {
@@ -72,32 +72,35 @@ class LoginForm extends Component {
         e.preventDefault();
         console.log(this.props.form);
         // console.log(this.props.form.getFieldsValue());
-        // this.props.form.validateFieldsAndScroll((err, values) => {
-        //     if (!err) {
-        //         console.log('Received values of form: ', values);
-        //         axios.post(`http://localhost:5000/login`, {
-        //             "user_id": values['username'],
-        //             "password": values['password'],
-        //         })
-        //             .then((response) => {
-        //                 console.log(response);
-        //                 if (response.statusText === "OK") {
-        //                     console.log('Login succeed!');
-        //                     return response.statusText;
-        //                 }
-        //                 throw new Error(response.statusText);
-        //             })
-        //             .then((data) => {
-        //                 console.log(data);
-        //                 // this.props.handleLoginSucceed(data);
-        //                 // message.success('Login succeed!');
-        //             })
-        //             .catch((err) => {
-        //                 console.error(err);
-        //                 // message.error('Login failed.');
-        //             });
-        //     }
-        // });
+        this.props.form.validateFieldsAndScroll((err, values) => {
+            if (!err) {
+                console.log('Received values of form: ', values);
+                fetch(`${API_ROOT}/login`, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        username: values.username,
+                        password: values.password,
+                    })
+                })
+                    .then((response) => {
+                        console.log(response);
+                        if (response.statusText === "OK") {
+                            console.log('Login succeed!');
+                            return response.statusText;
+                        }
+                        throw new Error(response.statusText);
+                    })
+                    .then((data) => {
+                        console.log(data);
+                        // this.props.handleLoginSucceed(data);
+                        // message.success('Login succeed!');
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                        // message.error('Login failed.');
+                    });
+            }
+        });
     };
 }
 
