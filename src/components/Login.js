@@ -84,9 +84,9 @@ class LoginForm extends Component {
                 })
                     .then((response) => {
                         console.log(response);
-                        if (response.statusText === "OK") {
+                        if (response.ok) {
                             console.log('Login succeed!');
-                            return response.statusText;
+                            return response.text();
                         }
                         throw new Error(response.statusText);
                     })
