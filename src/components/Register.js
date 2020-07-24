@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Form, Input, Icon, Button } from 'antd';
+import { Form, Input, message, Button } from 'antd';
 
 import { Link } from "react-router-dom";
 import { API_ROOT } from '../constants';
@@ -130,8 +130,14 @@ class RegistrationForm extends Component {
                         }
                     })
                     .then(data => {
-                        console.log(data)
-                        this.props.history.push('/login');
+                        console.log(data);
+                        message.success('Register succeed!');
+                        // this.props.history.push('/login'); // 下一步要去的地方
+                        this.props.history.replace('/login');   // 替换当前页面
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        message.error('Register failed!');
                     })
             }
         });
