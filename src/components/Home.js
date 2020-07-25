@@ -1,10 +1,16 @@
 import React, {Component} from 'react';
 import { Tabs, Button } from 'antd';
-import { GEO_OPTIONS } from "../constants";
+import {GEO_OPTIONS, POS_KEY, TOKEN_KEY, AUTH_HEADER, API_ROOT} from "../constants";
 
 const { TabPane } = Tabs;   // 解构必须写在 import 之后
 
 class Home extends Component {
+    state = {
+        isLoadingGeoLocation: false,
+        isLoadingPosts: false,
+        errno: '',
+        posts: []
+    }
     render() {
         const operations = <Button type = "primary">Create New Post</Button>;
         return (
@@ -27,21 +33,66 @@ class Home extends Component {
     componentDidMount() {
         // fetch geo-location
         if ("geolocation" in navigator) {
+            this.setState({
+                isLoadingGeoLocation: true,
+                error: '', // 清空处理 避免error依然为之前的message
+            })
             navigator.geolocation.getCurrentPosition(
-
                 this.onSuccessLoadGeoLocation,  // 成功的回调函数
                 this.onFailedLoadGeoLocation,  // 失败的回调函数
                 GEO_OPTIONS
             )
+        } else {
+            this.setState({
+                error: 'Geolocation location is not supported.'
+            })
         }
     }
 
-    onSuccessLoadGeoLocation = () => {
-
+    // 此处可以拿到位置信息
+    onSuccessLoadGeoLocation = (position) => {
+        console.log(position);
+        const { latitude, longitude } = position.coords;
+        console.log(latitude, longitude);
+        localStorage.setItem(POS_KEY, JSON.stringify({lat: latitude, lon: longitude}));
+        this.loadNearByPost();
     }
 
-    onFailedLoadGeoLocation = () => {
+    // 获取位置信息 根据位置信息从后端拿数据
+    loadNearByPost = () => {
+        const { lat, lon } = JSON.parse(localStorage.getItem(POS_KEY));
+        const token = localStorage.getItem(TOKEN_KEY);
+        this.setState( {
+                isLoadingPosts: true,
+                error: ''
+        })
+        fetch(`${API_ROOT}/search?lat=${lat}&lon=${lon}&range=20000`, {
+            method: 'GET',
+            headers: {
+                Authorization: `${AUTH_HEADER} ${token}`
+            }
+        })
+            .then(response => {
+                console.log(response)
+                if (response.ok) {
+                    return response.json()
+                }
+                throw new Error('Loading post error')
+            })
+            .then(data => {
+                console.log(data)
+                this.setState({
+                    post: data
+                })
+            })
+    }
 
+    onFailedLoadGeoLocation = (err) => {
+        console.log(err);
+        this.setState({
+            isLoadingGeoLocation: false,
+            err: 'fetch geolocation failed'
+        })
     }
 }
 
