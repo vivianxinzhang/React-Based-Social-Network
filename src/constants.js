@@ -6,7 +6,7 @@ export const TOKEN_KEY = 'TOKEN_KEY';
 
 export const GEO_OPTIONS = {
     enableHighAccuracy: true,
-    maximumAge: 300000,
+    maximumAge: 300000,     // 地图cache要进行多长时间 -- 30min
     timeout: 27000,
 };
 export const POS_KEY = 'POS_KEY';

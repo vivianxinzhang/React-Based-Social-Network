@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { Tabs, Button } from 'antd';
-const { TabPane } = Tabs;
+import { GEO_OPTIONS } from "../constants";
+
+const { TabPane } = Tabs;   // 解构必须写在 import 之后
 
 class Home extends Component {
     render() {
@@ -20,6 +22,26 @@ class Home extends Component {
                 </TabPane>
             </Tabs>
         );
+    }
+
+    componentDidMount() {
+        // fetch geo-location
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(
+
+                this.onSuccessLoadGeoLocation,  // 成功的回调函数
+                this.onFailedLoadGeoLocation,  // 失败的回调函数
+                GEO_OPTIONS
+            )
+        }
+    }
+
+    onSuccessLoadGeoLocation = () => {
+
+    }
+
+    onFailedLoadGeoLocation = () => {
+
     }
 }
 
