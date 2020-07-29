@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Tabs, Button } from 'antd';
+import { Tabs, Button, Spin } from 'antd';
 import {GEO_OPTIONS, POS_KEY, TOKEN_KEY, AUTH_HEADER, API_ROOT} from "../constants";
 
 const { TabPane } = Tabs;   // 解构必须写在 import 之后
@@ -30,8 +30,11 @@ class Home extends Component {
         );
     }
 
+    // When the component is rendered to the DOM for the first time such as page load
+    // we call the Geolocation API to determine a latitude and longitude for the browser
     componentDidMount() {
         // fetch geo-location
+        console.log(navigator.geolocation);
         if ("geolocation" in navigator) {
             this.setState({
                 isLoadingGeoLocation: true,
@@ -55,6 +58,10 @@ class Home extends Component {
         const { latitude, longitude } = position.coords;
         console.log(latitude, longitude);
         localStorage.setItem(POS_KEY, JSON.stringify({lat: latitude, lon: longitude}));
+        this.setState({
+            isLoadingGeoLocation: false,
+            error: ''
+        });
         this.loadNearByPost();
     }
 
@@ -65,7 +72,7 @@ class Home extends Component {
         this.setState( {
                 isLoadingPosts: true,
                 error: ''
-        })
+        });
         fetch(`${API_ROOT}/search?lat=${lat}&lon=${lon}&range=20000`, {
             method: 'GET',
             headers: {
@@ -75,23 +82,26 @@ class Home extends Component {
             .then(response => {
                 console.log(response)
                 if (response.ok) {
-                    return response.json()
+                    return response.json();
                 }
                 throw new Error('Loading post error')
             })
             .then(data => {
-                console.log(data)
-                this.setState({
-                    post: data
-                })
+                console.log(data);
+                this.setState({ posts : data ? data : [], isLoadingPosts: false
+                });
             })
+            .catch((e) => {
+                console.error(e);
+                this.setState({ isLoadingPosts: false, error: e.message });
+            });
     }
 
     onFailedLoadGeoLocation = (err) => {
         console.log(err);
         this.setState({
             isLoadingGeoLocation: false,
-            err: 'fetch geolocation failed'
+            err: 'Failed to load geolocation.'
         })
     }
 }
