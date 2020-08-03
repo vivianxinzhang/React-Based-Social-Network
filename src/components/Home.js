@@ -19,7 +19,7 @@ class Home extends Component {
                   className = "main-tabs"
             >
                 <TabPane tab="Image Post" key="1">
-                    {this.renderImagePosts()}
+                    { this.renderImagePosts() }
                 </TabPane>
                 <TabPane tab="Video Post" key="2">
                     Content of tab 2
@@ -98,28 +98,25 @@ class Home extends Component {
             });
     }
 
-    renderImagePosts() {
-        const { error, isLoadingGeoLocation, isLoadingPosts, posts } = this.state;
+    renderImagePosts = () => {
+        const { isLoadingPosts, error, isLoadingGeoLocation, posts } = this.state;
+        // has error
         if (error) {
             return error;
-        } else if (isLoadingGeoLocation) {
-            return <Spin tip="Loading geo location..."/>;
-        } else if (isLoadingPosts) {
-            return <Spin tip="Loading posts..."/>
-        } else if (posts.length > 0) {
-            const images = posts.map((post) => {
-                return {
-                    user: post.user,
-                    src: post.url,
-                    thumbnail: post.url,
-                    caption: post.message,
-                    thumbnailWidth: 400,
-                    thumbnailHeight: 300,
-                };
-            });
-            return <Gallery images={images}/>
+        }
+        // loading geo-location
+        else if (isLoadingGeoLocation) {
+            return <Spin tip = "Loading geolocation ... "/>
+        }
+        // loading posts
+        else if ( isLoadingPosts ) {
+            return  <Spin tip = "Loading posts ... "/>
+        }
+        // have posts ready
+        else if (posts.length > 0) {
+            // return <Gallery images={}/>
         } else {
-            return 'No nearby posts';
+            return "No data";
         }
     }
 
