@@ -89,7 +89,9 @@ class Home extends Component {
             })
             .then(data => {
                 console.log(data);
-                this.setState({ posts : data ? data : [], isLoadingPosts: false
+                this.setState({
+                    posts : data ? data : [],
+                    isLoadingPosts: false
                 });
             })
             .catch((e) => {
