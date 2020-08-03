@@ -19,7 +19,7 @@ class Home extends Component {
                   className = "main-tabs"
             >
                 <TabPane tab="Image Post" key="1">
-                    Content of tab 1
+                    {this.renderImagePosts()}
                 </TabPane>
                 <TabPane tab="Video Post" key="2">
                     Content of tab 2
@@ -98,7 +98,7 @@ class Home extends Component {
             });
     }
 
-    renderImagePost() {
+    renderImagePosts() {
         const { error, isLoadingGeoLocation, isLoadingPosts, posts } = this.state;
         if (error) {
             return error;
