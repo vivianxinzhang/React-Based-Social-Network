@@ -13,22 +13,28 @@ class Main extends Component {
                     <Route path="/register" component={Register}/>
                     <Route path="/login"
                            // component={Login} need to know if logged in already
-                           render = {this.getLogin}
+                           render={this.getLogin}
                     />
-                    <Route path="/home" component={Home}/>
+                    <Route path="/home"
+                           // component={Home}
+                           render={this.getHome}
+                    />
                 </Switch>
             </div>
         );
     }
-    getLogin = () => {
+    getHome = () => {
         // case 1: if already login -> <Home />
-
         // case 2: not yet -> <Login />
         return this.props.isLoggedIn ?
-            <Redirect to="/home"/> :
-                <Login isLoggedIn = {this.props.isLoggedIn}
-                handleLoginSucceed = {this.props.handleLoginSucceed} />
-
+            <Home /> : <Redirect to = "/login"/>
+    }
+    getLogin = () => {
+        // case 1: if already login -> <Home />
+        // case 2: not yet -> <Login />
+        return this.props.isLoggedIn ?
+            <Redirect to="/home"/>
+            : <Login handleLoginSucceed = {this.props.handleLoginSucceed} />
     }
 }
 
