@@ -19,10 +19,20 @@ class App extends React.Component{
         })
     }
 
+    handleLogout = () => {
+        console.log(TOKEN_KEY);
+        localStorage.removeItem(TOKEN_KEY);
+        this.setState({
+            isLoggedIn: false
+        })
+    }
+
     render() {
         return (
             <div className="App">
-                <TopBar/>
+                <TopBar isLoggedIn = {this.state.isLoggedIn}
+                        handleLogout = {this.handleLogout}
+                />
                 <Main isLoggedIn = {this.state.isLoggedIn}
                       handleLoginSucceed = {this.handleLoginSucceed}
                 />
