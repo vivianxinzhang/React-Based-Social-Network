@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 // import { Link } from 'react-router-dom';
 import { API_ROOT, TOKEN_KEY} from "../constants";
 // import axios from 'axios';
@@ -91,13 +91,15 @@ class LoginForm extends Component {
                         throw new Error(response.statusText);
                     })
                     .then((data) => {
-                        console.log(data);
-                        // this.props.handleLoginSucceed(data);
-                        // message.success('Login succeed!');
+                        // get token from backend
+                        console.log('fetch token from backend->', data);
+                        // pass token to App component
+                        this.props.handleLoginSucceed(data);
+                        message.success('Login succeed!');
                     })
                     .catch((err) => {
                         console.error(err);
-                        // message.error('Login failed.');
+                        message.error('Login failed.');
                     });
             }
         });

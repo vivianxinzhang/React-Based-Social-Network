@@ -10,8 +10,10 @@ class App extends React.Component{
     }
 
     handleLoginSucceed = (token) => {
-        console.log(token);
+        // pass token from Login to App component
+        console.log('set up token frontend->', token);
         localStorage.setItem(TOKEN_KEY, token);
+        // updating life cycle -> re-render
         this.setState({
             isLoggedIn: true
         })

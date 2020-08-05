@@ -16,7 +16,7 @@ class Main extends Component {
                            render={this.getLogin}
                     />
                     <Route path="/home"
-                           // component={Home}
+                           // component={Home} need to know if logged in already
                            render={this.getHome}
                     />
                 </Switch>
