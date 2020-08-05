@@ -74,7 +74,6 @@ class Home extends Component {
                 isLoadingPosts: true,
                 error: ''
         });
-        const proxyurl = "https://cors-anywhere.herokuapp.com/";
         fetch( `${API_ROOT}/search?lat=${lat}&lon=${lon}&range=20000`, {
             method: 'GET',
             headers: {

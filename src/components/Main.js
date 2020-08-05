@@ -11,10 +11,10 @@ class Main extends Component {
             <div className="main">
                 {/*<Register/>*/}
                 {/*<Login />*/}
-                {/*<Home />*/}
                 <Switch>
                     <Route path="/register" component={Register}/>
                     <Route path="/login" component={Login}/>
+                    <Route path="/home" component={Home}/>
                 </Switch>
             </div>
         );
