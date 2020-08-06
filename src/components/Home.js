@@ -9,7 +9,7 @@ class Home extends Component {
     state = {
         isLoadingGeoLocation: false,
         isLoadingPosts: false,
-        errno: '',
+        error: '',
         posts: []
     }
     render() {
@@ -38,7 +38,7 @@ class Home extends Component {
         console.log(navigator.geolocation);
         if ("geolocation" in navigator) {
             this.setState({
-                isLoadingGeoLocation: true,
+                isLoadingGeoLocation: true, // 后续根据是否loading进行spinning的操作
                 error: '', // 清空处理 避免error依然为之前的message
             })
             navigator.geolocation.getCurrentPosition(
@@ -81,7 +81,7 @@ class Home extends Component {
             }
         })
             .then(response => {
-                console.log(response)
+                console.log(response);
                 if (response.ok) {
                     return response.json();
                 }
@@ -90,7 +90,7 @@ class Home extends Component {
             .then(data => {
                 console.log(data);
                 this.setState({
-                    posts : data ? data : [],
+                    posts : data ? data : [],   // 把fetch到的数据记录到state中
                     isLoadingPosts: false
                 });
             })
@@ -126,7 +126,7 @@ class Home extends Component {
         console.log(err);
         this.setState({
             isLoadingGeoLocation: false,
-            err: 'Failed to load geolocation.'
+            error: 'Failed to load geolocation.'
         })
     }
 }
