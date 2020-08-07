@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import { Tabs, Button, Spin } from 'antd';
-import {GEO_OPTIONS, POS_KEY, TOKEN_KEY, AUTH_HEADER, API_ROOT} from "../constants";
 import Gallery from "./Gallery";
-
+import {GEO_OPTIONS, POS_KEY, TOKEN_KEY, AUTH_HEADER, API_ROOT} from "../constants";
 const { TabPane } = Tabs;   // 解构必须写在 import 之后
 
 class Home extends Component {
@@ -19,6 +18,7 @@ class Home extends Component {
                   className = "main-tabs"
             >
                 <TabPane tab="Image Post" key="1">
+                    Content of tab 1
                     { this.renderImagePosts() }
                 </TabPane>
                 <TabPane tab="Video Post" key="2">
@@ -102,21 +102,22 @@ class Home extends Component {
 
     renderImagePosts = () => {
         const { isLoadingPosts, error, isLoadingGeoLocation, posts } = this.state;
-        // has error
+        // Case 1: has error
         if (error) {
             return error;
         }
-        // loading geo-location
+        // Case 2: loading geo-location
         else if (isLoadingGeoLocation) {
             return <Spin tip = "Loading geolocation ... "/>
         }
-        // loading posts
+        // Case 3: loading posts
         else if ( isLoadingPosts ) {
             return  <Spin tip = "Loading posts ... "/>
         }
-        // have posts ready
+        // Case 4: have posts ready
         else if (posts.length > 0) {
-            // return <Gallery images={}/>
+            console.log(posts);
+            return <Gallery images={posts}/>;
         } else {
             return "No data";
         }
