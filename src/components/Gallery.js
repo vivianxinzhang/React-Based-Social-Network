@@ -20,9 +20,24 @@ class Gallery extends Component {
     render() {
         const { images } = this.props;
         console.log(images);
+        const imageArr = images.map( image => {
+            return {
+                // ... 表示其它属性不变
+                ...image,
+                // 增加一个 customOverlay 的属性
+                customOverlay: (
+                    <div>
+                        <div>
+                            {`${image.user}: ${image.caption}`}
+                        </div>
+                    </div>
+                )
+            }
+        })
         return (
-            <div className="gallery">
-                Gallery
+            <div >
+                <GridGallery images={ images } />
+                <GridGallery images={ imageArr } />
             </div>
         );
     }
