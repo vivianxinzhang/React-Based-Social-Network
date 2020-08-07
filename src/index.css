@@ -4,6 +4,7 @@
 @import "./styles/Register.css";
 @import "./styles/Login.css";
 @import "./styles/Home.css";
+@import "./styles/Gallery.css";
 
 body {
   margin: 0;

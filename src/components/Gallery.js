@@ -20,6 +20,7 @@ class Gallery extends Component {
     render() {
         const { images } = this.props;
         console.log(images);
+        // add thumbnail
         const imageArr = images.map( image => {
             return {
                 // ... 表示其它属性不变
@@ -27,7 +28,7 @@ class Gallery extends Component {
                 // 增加一个 customOverlay 的属性
                 customOverlay: (
                     <div>
-                        <div>
+                        <div className = "gallery-thumbnail">
                             {`${image.user}: ${image.caption}`}
                         </div>
                     </div>
