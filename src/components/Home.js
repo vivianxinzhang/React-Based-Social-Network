@@ -117,7 +117,18 @@ class Home extends Component {
         // Case 4: have posts ready
         else if (posts.length > 0) {
             console.log(posts);
-            return <Gallery images={posts}/>;
+            const imageArr = posts.map( post => {
+                return {
+                    user: post.user,
+                    src: post.url,
+                    caption: post.message,
+                    thumbnail: post.url,
+                    thumbnailWidth: 400,
+                    thumbnailHeight: 300
+                }
+            });
+            console.log('posts -> ', imageArr)
+            // return <Gallery images={posts}/>;
         } else {
             return "No data";
         }
