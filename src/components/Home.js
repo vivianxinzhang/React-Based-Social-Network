@@ -128,7 +128,7 @@ class Home extends Component {
                 }
             });
             console.log('posts -> ', imageArr)
-            // return <Gallery images={posts}/>;
+            return <Gallery images={imageArr}/>;
         } else {
             return "No data";
         }
