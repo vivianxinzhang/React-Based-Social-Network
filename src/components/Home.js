@@ -30,7 +30,7 @@ class Home extends Component {
                     { this.renderPosts(POST_TYPE_IMAGE) }
                 </TabPane>
                 <TabPane tab="Video Post" key="2">
-                    Content of tab 2
+                    { this.renderPosts(POST_TYPE_VIDEO) }
                 </TabPane>
                 <TabPane tab="Map" key="3">
                     Content of tab 3
@@ -124,7 +124,7 @@ class Home extends Component {
         }
         // Case 4: have posts ready
         else if (posts.length > 0) {
-            console.log(posts);
+            console.log('postType -> ', postType);
             // case 1: image
             // case 2: video
             return postType === POST_TYPE_IMAGE ?
@@ -172,7 +172,7 @@ class Home extends Component {
 
     renderVideoPost = () => {
         // video
-
+        console.log('video posts');
     }
 
     onFailedLoadGeoLocation = (err) => {
