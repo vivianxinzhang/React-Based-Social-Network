@@ -10,6 +10,7 @@ import {GEO_OPTIONS,
     POST_TYPE_VIDEO,
     POST_TYPE_UNKNOWN
 } from "../constants";
+import CreatePostButton from "./CreatePostButton";
 
 const { TabPane } = Tabs;   // 解构必须写在 import 之后
 
@@ -21,7 +22,9 @@ class Home extends Component {
         posts: []
     }
     render() {
-        const operations = <Button type = "primary">Create New Post</Button>;
+        const operations = <CreatePostButton />;
+            // <Button type = "primary">Create New Post</Button>;
+
         return (
             <Tabs tabBarExtraContent={operations}
                   className = "main-tabs"
