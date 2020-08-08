@@ -13,3 +13,9 @@ export const GEO_OPTIONS = {
 };
 export const POS_KEY = 'POS_KEY';
 export const AUTH_HEADER = 'Bearer';
+
+// 用const进行类型判断的好处是？ 便于拓展 easy to change later
+// 修改类型 只用修改此处
+export const POST_TYPE_IMAGE = 'image';
+export const POST_TYPE_VIDEO = 'video';
+export const POST_TYPE_UNKNOWN = 'unknown';

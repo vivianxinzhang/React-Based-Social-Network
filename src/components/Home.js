@@ -1,7 +1,16 @@
 import React, {Component} from 'react';
 import { Tabs, Button, Spin } from 'antd';
 import Gallery from "./Gallery";
-import {GEO_OPTIONS, POS_KEY, TOKEN_KEY, AUTH_HEADER, API_ROOT} from "../constants";
+import {GEO_OPTIONS,
+    POS_KEY,
+    TOKEN_KEY,
+    AUTH_HEADER,
+    API_ROOT,
+    POST_TYPE_IMAGE,
+    POST_TYPE_VIDEO,
+    POST_TYPE_UNKNOWN
+} from "../constants";
+
 const { TabPane } = Tabs;   // 解构必须写在 import 之后
 
 class Home extends Component {
@@ -18,8 +27,7 @@ class Home extends Component {
                   className = "main-tabs"
             >
                 <TabPane tab="Image Post" key="1">
-                    Content of tab 1
-                    { this.renderImagePosts() }
+                    { this.renderPosts(POST_TYPE_IMAGE) }
                 </TabPane>
                 <TabPane tab="Video Post" key="2">
                     Content of tab 2
@@ -100,6 +108,34 @@ class Home extends Component {
             });
     }
 
+    renderPosts = (postType) => {
+        const { isLoadingPosts, error, isLoadingGeoLocation, posts } = this.state;
+        // Case 1: has error
+        if (error) {
+            return error;
+        }
+        // Case 2: loading geo-location
+        else if (isLoadingGeoLocation) {
+            return <Spin tip = "Loading geolocation ... "/>
+        }
+        // Case 3: loading posts
+        else if ( isLoadingPosts ) {
+            return  <Spin tip = "Loading posts ... "/>
+        }
+        // Case 4: have posts ready
+        else if (posts.length > 0) {
+            console.log(posts);
+            // case 1: image
+            // case 2: video
+            return postType === POST_TYPE_IMAGE ?
+                this.renderImagePosts() : this.renderVideoPost();
+            // console.log('posts -> ', imageArr)
+            // return <Gallery images={imageArr}/>;
+        } else {
+            return "No data";
+        }
+    }
+
     renderImagePosts = () => {
         const { isLoadingPosts, error, isLoadingGeoLocation, posts } = this.state;
         // Case 1: has error
@@ -132,6 +168,11 @@ class Home extends Component {
         } else {
             return "No data";
         }
+    }
+
+    renderVideoPost = () => {
+        // video
+
     }
 
     onFailedLoadGeoLocation = (err) => {

@@ -36,9 +36,12 @@ class Gallery extends Component {
             }
         })
         return (
-            <div >
+            <div className = "gallery">
                 <GridGallery images={ images } />
-                <GridGallery images={ imageArr } />
+                <GridGallery enableImageSelection={false}
+                             images={ imageArr }
+                             backdropClosesModal
+                />
             </div>
         );
     }
