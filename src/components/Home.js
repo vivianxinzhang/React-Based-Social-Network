@@ -23,7 +23,7 @@ class Home extends Component {
     }
     render() {
         const operations = <CreatePostButton />;
-            // <Button type = "primary">Create New Post</Button>;
+        //const operations = <Button type = "primary">Create New Post</Button>;
 
         return (
             <Tabs tabBarExtraContent={operations}
@@ -140,23 +140,10 @@ class Home extends Component {
     }
 
     renderImagePosts = () => {
-        const { isLoadingPosts, error, isLoadingGeoLocation, posts } = this.state;
-        // Case 1: has error
-        if (error) {
-            return error;
-        }
-        // Case 2: loading geo-location
-        else if (isLoadingGeoLocation) {
-            return <Spin tip = "Loading geolocation ... "/>
-        }
-        // Case 3: loading posts
-        else if ( isLoadingPosts ) {
-            return  <Spin tip = "Loading posts ... "/>
-        }
-        // Case 4: have posts ready
-        else if (posts.length > 0) {
-            console.log(posts);
-            const imageArr = posts.map( post => {
+        const { posts } = this.state;
+        // remove video posts
+        const imageArr = posts.filter(post => post.type === POST_TYPE_IMAGE)
+            .map( post => {
                 return {
                     user: post.user,
                     src: post.url,
@@ -166,11 +153,7 @@ class Home extends Component {
                     thumbnailHeight: 300
                 }
             });
-            console.log('posts -> ', imageArr)
-            return <Gallery images={imageArr}/>;
-        } else {
-            return "No data";
-        }
+        return <Gallery images={imageArr}/>;
     }
 
     renderVideoPost = () => {
