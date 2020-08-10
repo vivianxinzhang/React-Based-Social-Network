@@ -3,6 +3,12 @@ import { Modal, Button } from 'antd';
 import CreatePostForm from "./CreatePostForm";
 
 class CreatePostButton extends Component {
+    /* Method 1 to use Ref */
+    // constructor(props) {
+    //     super(props);
+    //     this.myRef = React.createRef();
+    // }
+
     // 通过 state 来决定 modal 是否可见
     state = {
         visible: false,
@@ -33,6 +39,8 @@ class CreatePostButton extends Component {
         const { visible, confirmLoading } = this.state;
         return (
             <div>
+                {/*<div ref={this.myRef}> Method 1 to use Ref </div>*/}
+                {/*<div ref="haha"> Method 2 to use Ref </div>*/}
                 <Button type = "primary" onClick={this.showModal}>
                     Create New Post
                 </Button>
@@ -43,13 +51,16 @@ class CreatePostButton extends Component {
                        confirmLoading={confirmLoading}
                        okText="Create"
                 >
+                    {/*Method 3 to use Ref*/}
+                    {/*<CreatePostForm ref={() => {}}/>*/}
+                    {/*<CreatePostForm ref={(formObj) => {this.form = formObj}}/>*/}
                     <CreatePostForm ref={this.getRefForm}/>
                 </Modal>
             </div>
         );
     }
-    getRefForm = () => {
-
+    getRefForm = (formObj) => {
+        console.log(formObj);
     }
 }
 
