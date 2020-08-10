@@ -62,6 +62,7 @@ class CreatePostButton extends Component {
 
     getRefForm = (formObj) => {
         console.log(formObj);
+        this.form = formObj;
     }
 }
 

@@ -24,13 +24,21 @@ class NormalCreatePostForm extends Component {
                 <Form.Item label="Image/Video">
                     {
                         getFieldDecorator('image', {
-                            rules: [{
-                                required: true,
-                                message: 'Please upload your image'
-                            }]
+                            valuePropName: 'fileList',
+                            getValueFromEvent: this.normFile,
                         })(
-                            <Upload.Dragger>
-
+                            <Upload.Dragger name="files"
+                                            beforeUpload={this.beforeUpload}
+                            >
+                                <p className="">
+                                    <Icon type="inbox"/>
+                                </p>
+                                <p>
+                                    Click or drag file to this area to upload
+                                </p>
+                                <p>
+                                    Support for a single or bulk upload
+                                </p>
                             </Upload.Dragger>
                             )
                     }
@@ -38,6 +46,18 @@ class NormalCreatePostForm extends Component {
             </Form>
         );
     }
+
+    // prevent default upload
+    beforeUpload = () => false;
+
+    normFile = e => {
+        console.log('Upload event:', e);
+        if (Array.isArray(e)) {
+            return e;
+        }
+        return e && e.fileList;
+    }
+
 }
 // HOC to get form object
 const CreatePostForm = Form.create()(NormalCreatePostForm);
