@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Modal, Button } from 'antd';
+import { Modal, Button, Form} from 'antd';
 import CreatePostForm from "./CreatePostForm";
 
 class CreatePostButton extends Component {
@@ -20,11 +20,17 @@ class CreatePostButton extends Component {
         });
     };
 
+    // form validation
     handleOk = e => {
         console.log(e);
         this.setState({
             visible: false,
         });
+        console.log(this.form);
+        this.form.validateFields((err, values) => {
+            console.log(err);
+            console.log(values);
+        })
     };
 
     handleCancel = e => {
