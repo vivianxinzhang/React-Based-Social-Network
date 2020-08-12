@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Modal, Button, Form} from 'antd';
 import CreatePostForm from "./CreatePostForm";
+import { TOKEN_KEY, API_ROOT, AUTH_HEADER, POS_KEY } from "../constants";
 
 class CreatePostButton extends Component {
     /* Method 1 to use Ref */
@@ -30,6 +31,34 @@ class CreatePostButton extends Component {
         this.form.validateFields((err, values) => {
             console.log(err);
             console.log(values);
+            if (!err) {
+                // url (token, position)
+                const token = localStorage.getItem(TOKEN_KEY);
+                const { lat, lon } = JSON.parse(localStorage.getItem(POS_KEY));
+                // file
+                const formdata = new FormData();
+                formdata.set('lat', lat);
+                formdata.set('lon', lon);
+                formdata.set('message', values.message);
+                formdata.set('image', values[0].originFileObj);
+                // send
+                fetch(`${API_ROOT}/post`, {
+                    method: "POST",
+                    header: {
+                        Authorization: `${AUTH_HEADER}${TOKEN_KEY}`
+
+                    },
+                    body: formdata
+                })
+                    .then(response => {
+                        if(response.ok) {
+                            console.log(response);
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            };
         })
     };
 
