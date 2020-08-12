@@ -24,9 +24,6 @@ class CreatePostButton extends Component {
     // form validation
     handleOk = e => {
         console.log(e);
-        this.setState({
-            visible: false,
-        });
         console.log(this.form);
         this.form.validateFields((err, values) => {
             console.log(err);
@@ -40,20 +37,27 @@ class CreatePostButton extends Component {
                 formdata.set('lat', lat);
                 formdata.set('lon', lon);
                 formdata.set('message', values.message);
-                formdata.set('image', values[0].originFileObj);
+                formdata.set('image', values.image[0].originFileObj);
                 // send
                 fetch(`${API_ROOT}/post`, {
                     method: "POST",
-                    header: {
-                        Authorization: `${AUTH_HEADER}${TOKEN_KEY}`
-
+                    headers: {
+                        Authorization: `${AUTH_HEADER} ${token}`
                     },
                     body: formdata
                 })
                     .then(response => {
                         if(response.ok) {
                             console.log(response);
+                            return this.props.loadNearByPosts();
                         }
+                        throw new Error('Failed to upload');
+                    })
+                    .then(() => {
+                        this.setState({
+                            visible: false,
+                        });
+                        this.form.resetFields();
                     })
                     .catch(err => {
                         console.log(err);

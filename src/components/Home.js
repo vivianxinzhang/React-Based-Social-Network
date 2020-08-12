@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Tabs, Button, Spin } from 'antd';
+import { Tabs, Button, Spin, Row, Col } from 'antd';
 import Gallery from "./Gallery";
 import {GEO_OPTIONS,
     POS_KEY,
@@ -22,7 +22,7 @@ class Home extends Component {
         posts: []
     }
     render() {
-        const operations = <CreatePostButton />;
+        const operations = <CreatePostButton loadNearByPosts = {this.loadNearByPosts}/>;
         //const operations = <Button type = "primary">Create New Post</Button>;
 
         return (
@@ -144,6 +144,7 @@ class Home extends Component {
         // remove video posts
         const imageArr = posts.filter(post => post.type === POST_TYPE_IMAGE)
             .map( post => {
+                console.log('->', post);
                 return {
                     user: post.user,
                     src: post.url,
@@ -159,6 +160,18 @@ class Home extends Component {
     renderVideoPost = () => {
         // video
         console.log('video posts');
+        const posts = this.state.posts;
+        return <Row gutter={20}>
+            {
+                posts.filter((posts) => [POST_TYPE_VIDEO, POST_TYPE_UNKNOWN]
+                        .includes(posts.type)).map((post) => (
+                            <Col key={posts.url} span={8}>
+                                <video src={post.url} controls={true} className="video-block"/>
+                                <p>{post.user}: {post.message}</p>
+                            </Col>
+                ))
+            }
+        </Row>
     }
 
     onFailedLoadGeoLocation = (err) => {
