@@ -7,7 +7,7 @@ class NormalAroundMap extends Component {
         return (
             <GoogleMap
                 defaultZoom={8}
-                defaultCenter={{ lat: -34.397, lng: 150.644 }}
+                defaultCenter={{ lat: 37, lng: -121 }}
             >
             </GoogleMap>
         );
