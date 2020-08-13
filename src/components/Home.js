@@ -43,6 +43,7 @@ class Home extends Component {
                         containerElement={<div style={{ height: `400px` }} />}
                         mapElement={<div style={{ height: `100%` }} />}
                         posts={this.state.posts}
+                        loadPostsByTopic={this.loadNearByPost}
                     />
                 </TabPane>
             </Tabs>
@@ -85,14 +86,16 @@ class Home extends Component {
     }
 
     // 获取位置信息 根据位置信息从后端拿数据
-    loadNearByPost = () => {
-        const { lat, lon } = JSON.parse(localStorage.getItem(POS_KEY));
+    loadNearByPost = (center, radius) => {
+        // re-center when moving map
+        const { lat, lon } = center ? center : JSON.parse(localStorage.getItem(POS_KEY));
+        const range = radius ? radius : 20000;
         const token = localStorage.getItem(TOKEN_KEY);
         this.setState( {
                 isLoadingPosts: true,
                 error: ''
         });
-        fetch( `${API_ROOT}/search?lat=${lat}&lon=${lon}&range=20000`, {
+        fetch( `${API_ROOT}/search?lat=${lat}&lon=${lon}&range=${range}`, {
             method: 'GET',
             headers: {
                 Authorization: `${AUTH_HEADER} ${token}`
