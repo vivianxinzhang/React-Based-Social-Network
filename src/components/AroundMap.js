@@ -4,10 +4,11 @@ import { POS_KEY } from "../constants";
 
 class NormalAroundMap extends Component {
     render() {
+        const { lat, lon } = JSON.parse(localStorage.getItem(POS_KEY));
         return (
             <GoogleMap
-                defaultZoom={8}
-                defaultCenter={{ lat: 37, lng: -121 }}
+                defaultZoom={10}
+                defaultCenter={{ lat: lat, lng: lon }}
             >
             </GoogleMap>
         );

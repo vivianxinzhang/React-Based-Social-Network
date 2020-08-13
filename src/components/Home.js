@@ -42,6 +42,7 @@ class Home extends Component {
                         loadingElement={<div style={{ height: `100%` }} />}
                         containerElement={<div style={{ height: `400px` }} />}
                         mapElement={<div style={{ height: `100%` }} />}
+                        posts={this.state.posts}
                     />
                 </TabPane>
             </Tabs>
