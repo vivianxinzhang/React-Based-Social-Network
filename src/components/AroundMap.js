@@ -35,7 +35,7 @@ class NormalAroundMap extends Component {
         // get radius
         const radius = this.getRadius();
         // reload post -> call this.props.loadPostsByTopic (child -> parent)
-
+        this.props.loadPostsByTopic(center, radius);
     }
 
     getCenter = () => {
