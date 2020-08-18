@@ -11,14 +11,14 @@ class AroundMarker extends Component {
         isOpen: false
     }
 
-    // handleToggle = () => {
+    // handleToggleOpen = () => {
     //     this.setState((prevState) => ({
     //             isOpen: !prevState.isOpen
     //         })
     //     );
     // }
 
-    handleToggle = () => {
+    handleToggleOpen = () => {
         this.setState((prevState) => {
                 return {
                     isOpen: !prevState.isOpen
@@ -43,7 +43,9 @@ class AroundMarker extends Component {
         return (
             <Marker
                 position={{ lat: lat, lng: lon }}
-                onClick={this.handleToggle}
+                onClick={this.handleToggleOpen}
+                onMouseOver={isImagePost ? this.handleToggleOpen : undefined}
+                onMouseOut={isImagePost ? undefined : this.handleToggleOpen}
                 icon={customIcon}
             >
                 {
