@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Tabs, Button, Spin, Row, Col } from 'antd';
+import { Tabs, Button, Spin, Row, Col, Radio } from 'antd';
 import Gallery from "./Gallery";
 import {GEO_OPTIONS,
     POS_KEY,
@@ -27,26 +27,34 @@ class Home extends Component {
         //const operations = <Button type = "primary">Create New Post</Button>;
 
         return (
-            <Tabs tabBarExtraContent={operations}
-                  className = "main-tabs"
-            >
-                <TabPane tab="Image Post" key="1">
-                    { this.renderPosts(POST_TYPE_IMAGE) }
-                </TabPane>
-                <TabPane tab="Video Post" key="2">
-                    { this.renderPosts(POST_TYPE_VIDEO) }
-                </TabPane>
-                <TabPane tab="Map" key="3">
-                    <AroundMap
-                        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3CEh9DXuyjozqptVB5LA-dN7MxWWkr9s&v=3.exp&libraries=geometry,drawing,places"
-                        loadingElement={<div style={{ height: `100%` }} />}
-                        containerElement={<div style={{ height: `400px` }} />}
-                        mapElement={<div style={{ height: `100%` }} />}
-                        posts={this.state.posts}
-                        loadPostsByTopic={this.loadNearByPost}
-                    />
-                </TabPane>
-            </Tabs>
+            <div>
+                <Radio.Group onChange={this.onChange} value={this.state.value}>
+                    <Radio value={1}>A</Radio>
+                    <Radio value={2}>B</Radio>
+                    <Radio value={3}>C</Radio>
+                    <Radio value={4}>D</Radio>
+                </Radio.Group>
+                <Tabs tabBarExtraContent={operations}
+                      className = "main-tabs"
+                >
+                    <TabPane tab="Image Post" key="1">
+                        { this.renderPosts(POST_TYPE_IMAGE) }
+                    </TabPane>
+                    <TabPane tab="Video Post" key="2">
+                        { this.renderPosts(POST_TYPE_VIDEO) }
+                    </TabPane>
+                    <TabPane tab="Map" key="3">
+                        <AroundMap
+                            googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3CEh9DXuyjozqptVB5LA-dN7MxWWkr9s&v=3.exp&libraries=geometry,drawing,places"
+                            loadingElement={<div style={{ height: `100%` }} />}
+                            containerElement={<div style={{ height: `400px` }} />}
+                            mapElement={<div style={{ height: `100%` }} />}
+                            posts={this.state.posts}
+                            loadPostsByTopic={this.loadNearByPost}
+                        />
+                    </TabPane>
+                </Tabs>
+            </div>
         );
     }
 

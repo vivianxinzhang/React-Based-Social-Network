@@ -11,21 +11,21 @@ class AroundMarker extends Component {
         isOpen: false
     }
 
-    // handleToggleOpen = () => {
-    //     this.setState((prevState) => ({
-    //             isOpen: !prevState.isOpen
-    //         })
-    //     );
-    // }
-
     handleToggleOpen = () => {
-        this.setState((prevState) => {
-                return {
-                    isOpen: !prevState.isOpen
-                }
-            }
+        this.setState((prevState) => ({
+                isOpen: !prevState.isOpen
+            })
         );
     }
+
+    // handleToggleOpen = () => {
+    //     this.setState((prevState) => {
+    //             return {
+    //                 isOpen: !prevState.isOpen
+    //             }
+    //         }
+    //     );
+    // }
 
     render() {
         const { location, user, url, message, type } = this.props.post;
