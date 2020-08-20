@@ -8,7 +8,9 @@ import {GEO_OPTIONS,
     API_ROOT,
     POST_TYPE_IMAGE,
     POST_TYPE_VIDEO,
-    POST_TYPE_UNKNOWN
+    POST_TYPE_UNKNOWN,
+    TOPIC_AROUND,
+    TOPIC_FACE
 } from "../constants";
 import CreatePostButton from "./CreatePostButton";
 import AroundMap from "./AroundMap";
@@ -20,7 +22,8 @@ class Home extends Component {
         isLoadingGeoLocation: false,
         isLoadingPosts: false,
         error: '',
-        posts: []
+        posts: [],
+        topic: TOPIC_AROUND
     }
     render() {
         const operations = <CreatePostButton loadNearByPosts = {this.loadNearByPosts}/>;
@@ -28,11 +31,9 @@ class Home extends Component {
 
         return (
             <div>
-                <Radio.Group onChange={this.onChange} value={this.state.value}>
-                    <Radio value={1}>A</Radio>
-                    <Radio value={2}>B</Radio>
-                    <Radio value={3}>C</Radio>
-                    <Radio value={4}>D</Radio>
+                <Radio.Group onChange={this.onChange} value={this.state.topic}>
+                    <Radio value={TOPIC_AROUND}>Posts Around Me</Radio>
+                    <Radio value={TOPIC_FACE}>Faces Around the World</Radio>
                 </Radio.Group>
                 <Tabs tabBarExtraContent={operations}
                       className = "main-tabs"
@@ -56,6 +57,21 @@ class Home extends Component {
                 </Tabs>
             </div>
         );
+    }
+
+    onTopicChange = (e) => {
+        // current selected value
+        const topic = e.target.value;
+        // reset
+        this.setState({topic: topic});
+        // case1: topic around => loadNearby
+        if(topic === TOPIC_AROUND) {
+            this.loadNearByPost();
+        }
+        // Case 2: face around => loadFaceAround
+        else {
+            this.loadFaceAroundWorld();
+        }
     }
 
     // When the component is rendered to the DOM for the first time such as page load
