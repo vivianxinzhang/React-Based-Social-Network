@@ -31,7 +31,7 @@ class Home extends Component {
 
         return (
             <div>
-                <Radio.Group onChange={this.onChange} value={this.state.topic}>
+                <Radio.Group onChange={this.handleTopicChange} value={this.state.topic}>
                     <Radio value={TOPIC_AROUND}>Posts Around Me</Radio>
                     <Radio value={TOPIC_FACE}>Faces Around the World</Radio>
                 </Radio.Group>
@@ -59,18 +59,18 @@ class Home extends Component {
         );
     }
 
-    onTopicChange = (e) => {
+    handleTopicChange = (e) => {
         // current selected value
         const topic = e.target.value;
         // reset
         this.setState({topic: topic});
         // case1: topic around => loadNearby
         if(topic === TOPIC_AROUND) {
-            this.loadNearByPost();
+            return this.loadNearByPost();
         }
         // Case 2: face around => loadFaceAround
         else {
-            this.loadFaceAroundWorld();
+            return this.loadFaceAroundWorld();
         }
     }
 
@@ -96,13 +96,14 @@ class Home extends Component {
             })
             .then((data) => {
                 console.log(data);
+                // set state posts
                 this.setState({
                     posts: data ? data : [],
                     isLoadingPosts: false
                 })
             })
             .catch((e) => {
-                console.onerror(e);
+                console.error(e);
                 this.setState({
                     isLoadingPosts: false , error: e.message });
             });
