@@ -74,6 +74,40 @@ class Home extends Component {
         }
     }
 
+    loadFaceAroundWorld = () => {
+        const token = localStorage.getItem(TOKEN_KEY);
+        // set state to loading
+        this.setState({
+            isLoadingPosts: true,
+            error: ''
+        })
+        // fetch data from server
+        return fetch(`${API_ROOT}/cluster?term=face`, {
+            method: 'GET',
+            headers: {
+                Authorization: `${AUTH_HEADER} ${token}`,
+            }
+        })
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Failed to load posts');
+            })
+            .then((data) => {
+                console.log(data);
+                this.setState({
+                    posts: data ? data : [],
+                    isLoadingPosts: false
+                })
+            })
+            .catch((e) => {
+                console.onerror(e);
+                this.setState({
+                    isLoadingPosts: false , error: e.message });
+            });
+    }
+
     // When the component is rendered to the DOM for the first time such as page load
     // we call the Geolocation API to determine a latitude and longitude for the browser
     componentDidMount() {
