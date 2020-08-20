@@ -25,8 +25,17 @@ class Home extends Component {
         posts: [],
         topic: TOPIC_AROUND
     }
+
+    loadPostsbyTopic = (center, radius) => {
+        if (this.state.topic === TOPIC_AROUND) {
+            return this.loadNearByPost(center, radius);
+        } else {
+            return this.loadFaceAroundWorld();
+        }
+    }
+
     render() {
-        const operations = <CreatePostButton loadNearByPosts = {this.loadNearByPosts}/>;
+        const operations = <CreatePostButton loadNearByPosts = {this.loadPostsbyTopic}/>;
         //const operations = <Button type = "primary">Create New Post</Button>;
 
         return (

@@ -37,7 +37,7 @@ class Gallery extends Component {
         })
         return (
             <div className = "gallery">
-                <GridGallery images={ images } />
+                {/*<GridGallery images={ images } />*/}
                 <GridGallery enableImageSelection={false}
                              images={ imageArr }
                              backdropClosesModal
